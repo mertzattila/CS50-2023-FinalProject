@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="game-login-container">
+    <h2 class="game-login-title" style="color:aliceblue">File Upload</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="game-form-group">
+            <label for="file" class="game-label">File:</label>
+            <div>
+                {%if message == "file"%}
+                <label class="wrong">Not valid file</label>
+                {% endif%}
+
+            </div>
+            <input type="file" name="file"  style="width:130px">
+        </div>
+        <div class="game-form-group">
+            <label for="Game Name" class="game-label">Game Name:</label>
+            {% if message == "gamename" %}
+            <label class="wrong">Error</label>
+            {% endif %}
+            <input type="text"  name="gamename" class="game-input" required>
+        </div>
+        {% if message == "uploaded" %}
+        <p style="color:green">Sucessfully Uploaded</p>
+        {% endif %}
+        <button type="submit" class="game-button">Submit</button>
+    </form>
+</div>
+  
+{% endblock %}

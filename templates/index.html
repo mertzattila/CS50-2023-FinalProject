@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- Jumbotron with a welcome message -->
+<div class="jumbotron text-center" style="color:aliceblue">
+    <h1 class="display-4">Welcome to ShareGamez!</h1>
+    <p class="lead">Upload and discover new games.</p>
+</div>
+
+<!-- Featured Games Section -->
+<div class="container mt-4">
+    <h2 class="text-center" style="color:aliceblue">Featured Games</h2>
+    <div class="row">
+        {% if games[0] %}
+        <div class="col-md-4">
+            <div class="featured-game">
+                <div class="row">
+                    <div class="col-md-8"> <!-- Left column for text -->
+                        <h3>{{games[0]["name"]}}</h3>
+                        <p>{{games[0]["description"]}}</p>
+                        <p>Rating: 
+                        {% for _ in range(games[0]["rating"] | int) %}
+                            &#9733;
+                        {% endfor %}
+                        </p>
+                        <button class="btn btn-primary"><a href="/game/{{games[0]["id"]}}" class="btn btn-primary">Play Now</a></button>
+                    </div>
+                    <div class="col-md-4"> <!-- Right column for the image -->
+                        {% if games[0]["image"] %}
+                        <img class="img-fluid" src="{{url_for('static',filename="uploads/" + games[0]["image"])}}" alt="Game Screenshot">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if games[1] %}
+        <div class="col-md-4">
+            <div class="featured-game">
+                <div class="row">
+                    <div class="col-md-8"> <!-- Left column for text -->
+                        <h3>{{games[1]["name"]}}</h3>
+                        <p>{{games[1]["description"]}}</p>
+                        <p>Rating: 
+                        {% for _ in range(games[1]["rating"] | int) %}
+                            &#9733;
+                        {% endfor %}
+                        </p>
+                        <button class="btn btn-primary"><a href="/game/{{games[1]["id"]}}" class="btn btn-primary">Play Now</a></button>
+                    </div>
+                    <div class="col-md-4"> <!-- Right column for the image -->
+                        {% if games[1]["image"] %}
+                        <img class="img-fluid" src="{{url_for('static',filename="uploads/" + games[1]["image"])}}" alt="Game Screenshot">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if games[2] %}
+        <div class="col-md-4">
+            <div class="featured-game">
+                <div class="row">
+                    <div class="col-md-8"> <!-- Left column for text -->
+                        <h3>{{games[2]["name"]}}</h3>
+                        <p>{{games[2]["description"]}}</p>
+                        <p>Rating: 
+                        {% for _ in range(games[2]["rating"] | int) %}
+                            &#9733;
+                        {% endfor %}
+                        </p>
+                        <button class="btn btn-primary"><a href="/game/{{games[2]["id"]}}" class="btn btn-primary">Play Now</a></button>
+                    </div>
+                    <div class="col-md-4"> <!-- Right column for the image -->
+                        {% if games[2]["image"] %}
+                        <img class="img-fluid" src="{{url_for('static',filename="uploads/" + games[2]["image"])}}" alt="Game Screenshot">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

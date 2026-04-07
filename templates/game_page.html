@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body %}
+<header>
+    <h1 class="header-da">{{game["name"]}}</h1>
+</header>
+<div class="container-game">
+    {% if game["image"] %}
+    <img class="game-image" src="{{url_for('static',filename="uploads/" + game["image"])}}" alt="Game Screenshot">
+    {% endif %}
+    {% if game["video"] %}
+    <div class="video-container">
+        <iframe src="{{ game['video_url'] }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    {% endif %}
+    <h2>About the Game</h2>
+    <p>{{game["description"]}}</p>
+    <a class="btn" href="{{ url_for('download_file', filename=game["filename"]) }}">Download Now</a>
+
+    <div class="rating-box">
+        <header class="header-da">How was your experience?</header>
+        <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </div>
+    </div>
+    <script>
+    // Select all elements with the "i" tag and store them in a NodeList called "stars"
+    const stars = document.querySelectorAll(".stars i");
+    
+    // Initialize a variable to keep track of the user's rating
+    let userRating = 0;
+    const currentURL = window.location.href;
+
+    const parts = currentURL.split('/')
+
+    const lastPart = parts[parts.length -1]
+
+    // Loop through the "stars" NodeList
+    stars.forEach((star, index) => {
+        // Add a click event listener to each star
+        star.addEventListener("click", () => {
+            // Reset the user's rating by removing the "active" class from all stars
+            stars.forEach((star) => {
+                star.classList.remove("active");
+            });
+            
+            // Add the "active" class to the clicked star and any stars with a lower or equal index
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add("active");
+            }
+            
+            // Update the user's rating (1-based) based on the index
+            userRating = index + 1;
+            
+            // You can use the userRating value for further processing (e.g., sending it to a server).
+            fetch(lastPart,{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `userRating=${userRating}`,
+        })
+
+
+        });
+    });
+    </script>
+{% endblock %}

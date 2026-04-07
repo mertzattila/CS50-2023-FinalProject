@@ -1,0 +1,9 @@
+flask
+cs50
+flask_session
+werkzeug.security
+uuid
+os
+flask_mail
+re
+functools

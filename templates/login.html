@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="game-login-container">
+        <h2 class="game-login-title">Login</h2>
+        <form action="/login" method="post" class="game-login-form">
+            <div class="game-form-group">
+                <label for="email" class="game-label">Email:</label>
+                {%if message == "email"%}
+                <label class="wrong">Incorrect Username</label>
+                {%endif%}
+                <input type="text"  name="email" class="game-input" required>
+            </div>
+            <div class="game-form-group">
+                <label for="password" class="game-label">Password:</label>
+                {%if message == "password"%}
+                <label class="wrong">Incorrect Password</label>
+                {%endif%}
+                <input type="password"  name="password" class="game-input" required>
+            </div>
+            <button type="submit" class="game-button">Login</button>
+        </form>
+    </div>
+{% endblock %}

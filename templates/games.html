@@ -1,0 +1,87 @@
+{%extends "layout.html"%}
+{% block body %}
+<div class="container">
+    <h1 style="color:aliceblue">Game Library</h1>
+    <!-- Search bar -->
+    <div class="mb-3 search-wrapper">
+        <input type="search" id="search" class="form-control" data-search placeholder="Search by name">
+    </div>
+</div>
+<!-- Game cards container -->
+<div class="user-cards" data-user-cards-container></div>
+<template data-user-template>
+    <div class="card">
+        <div class="card-header" data-header></div>
+        <img class="card-image" data-image>
+        <div class="card-body" data-body></div>
+        <div class="card-rating" data-rating></div>
+    </div>
+</template>
+{%endblock %}
+{%block script%}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // get template, container, and input
+    const userCardTemplate = document.querySelector("[data-user-template]")
+    const userCardContainer = document.querySelector("[data-user-cards-container]")
+    const searchInput = document.querySelector("[data-search]")
+    
+    //define games variable
+    let games = []
+
+    //update search
+    searchInput.addEventListener("input", (e)=>{
+
+        // serch value
+        const value = e.target.value.toLowerCase()
+
+        //looping throught games
+        games.forEach(game => {
+            const isVisible = game.name.toLowerCase().includes(value)
+            game.element.classList.toggle("hide", !isVisible)
+        })
+    })
+
+    //fetch json file
+fetch("/returngames")
+    .then(res => res.json())
+    .then(data=>{
+        games = data.map(game => {
+            // get the template
+            const card = userCardTemplate.content.cloneNode(true).children[0]
+            //get elements
+            const header = card.querySelector("[data-header]")
+            const body = card.querySelector("[data-body]")
+            const cardRating = card.querySelector("[data-rating]")
+            const cardImage = card.querySelector("[data-image]")
+
+            //setting anchor for game link
+            const anchorElement = document.createElement("a");
+            anchorElement.classList.add("link-info")
+
+            // making a Visit anchor
+            anchorElement.href= "/game/"+ game.id
+            anchorElement.textContent = "Visit"
+            body.appendChild(anchorElement)
+
+            //game name
+            header.textContent = game.name
+
+            //game rating
+            cardRating.textContent = "Ratings: " + "\u2605".repeat(game.rating);
+
+            //game image
+            cardImage.src = "static/uploads/" +game.image 
+
+            //adding to the screen
+            userCardContainer.append(card)
+
+            //returning values to be checked and hide if needed
+            return{name: game.name, element: card}
+        })
+    })
+    
+    
+    
+</script>
+{%endblock%}

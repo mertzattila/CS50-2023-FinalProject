@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+    <header class="header-da">
+        <h1>{{game["name"]}}</h1>
+    </header>
+    <div class="container-game">
+        {% if game["image"] %}
+        <form action="/editgame/{{game["id"]}}" method="post" enctype="multipart/form-data">
+        <img class="game-image" src="{{url_for('static',filename="uploads/" + game["image"])}}" alt="Game Screenshot">
+        <div class="game-form-group">
+            <label class="game-label" for="file">Edit Image</label>
+            <input type="file" class="game-input" name="image-file">
+            <button type="submit">Edit</button>
+        </div>
+        </form>
+
+        {% elif not game["image"] %}
+        <form action="/editgame/{{game["id"]}}" method="post" enctype="multipart/form-data">
+            <div class="game-form-group">
+                <label class="game-label" for="file">Upload Image</label>
+                <input type="file" class="game-input" name="image-file">
+                <button type="submit">Submit</button>
+            </div>
+            
+        </form>
+        {% endif %}
+        {% if message =="file" %}
+        <label for="file" style="color:red">No file</label>
+        {% endif %}
+        {% if game["video"] %}
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/your_video_id" frameborder="0" allowfullscreen></iframe>
+        </div>
+        {% endif %}
+        <h2>About the Game</h2>
+        <form action="/editgamedescription/{{game["id"]}}" method="post">
+            <textarea  name="description" rows="4" cols="50">{{game["description"]}}</textarea>
+            <button type="submit">Edit</button>
+        </form>
+        <a class="btn" href="{{ url_for('download_file', filename=game["filename"]) }}">Download Now</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block style %}
+<style>
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 16px;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info label {
+    font-weight: bold;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-actions a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.profile-actions a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Your Profile</h1>
+    <div class="profile-info">
+        <label>Username:</label>
+        <p>{{user["username"]}}</p>
+    </div>
+    <div class="profile-info">
+        <label>Email:</label>
+        <p>{{user["email"]}}</p>
+    </div>
+    <div class="profile-actions">
+        <a href="/upload">Upload a New Game</a>
+        <a href="/editprofile">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}
